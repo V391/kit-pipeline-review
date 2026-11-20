@@ -1,0 +1,8 @@
+stage_id,label,display_order,probability
+appointmentscheduled,Appointment scheduled,1,0.2
+qualifiedtobuy,Qualified to buy,2,0.4
+presentationscheduled,Presentation scheduled,3,0.6
+decisionmakerboughtin,Decision maker bought in,4,0.8
+contractsent,Contract sent,5,0.9
+closedwon,Closed won,6,1.0
+closedlost,Closed lost,7,0.0
