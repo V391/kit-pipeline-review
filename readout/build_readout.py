@@ -104,12 +104,31 @@ def plot(rows: dict) -> None:
 
 README = """# Kit's pipeline numbers, for people and for AI
 
-Kit's Senior Analytics Engineer posting asks for sales metrics that Sales and RevOps trust without manual
-reconciliation, documented well enough that an AI agent can answer routine questions without a data
-teammate. This is a small version of that work, built on **sample data in HubSpot's deal shape**
-({deals} synthetic deals; no Kit data).
+**What this is:** a dbt project that turns a HubSpot-style deal export into the sales metrics a pipeline
+review runs on (win rate, stage conversion, deal velocity, open pipeline), rebuilds what each quarter's
+review actually knew from the CRM's property history, and tests whether an AI can answer routine sales
+questions from the metric docs alone. It is a small version of what Kit's Senior Analytics Engineer
+posting asks for, built on **sample data in HubSpot's deal shape** ({deals} synthetic deals; no Kit data).
 
-## What I found (two minute read)
+## Architecture
+
+```mermaid
+flowchart LR
+    A["Sample HubSpot export<br/>deals, stage and close date history, owners"] --> B["Staging models"]
+    B --> C["History rebuild<br/>what each pipeline review knew"]
+    B --> D["fct_deals<br/>one row per deal"]
+    C --> E["Reported vs now"]
+    D --> F["Metric marts<br/>win rate two ways, conversion, velocity, pipeline"]
+    E --> G["40 dbt tests<br/>reconcile, count once, no later edits"]
+    F --> G
+    F --> H["Metric docs<br/>for people and AI"]
+    H --> I["AI question set<br/>SQL scored against the models"]
+    E --> J["This README<br/>generated from the run"]
+    F --> J
+    I --> J
+```
+
+## What I found
 
 **1. The number we reported is not the number the CRM shows now.** {focus}'s win rate was **{reported}**
 at the pipeline review a week after the quarter. The CRM says **{now}** today, {drop} lower: {moved} of
