@@ -1,0 +1,92 @@
+[
+  {
+    "id": "h1",
+    "ask": "Did our win rate go up or down from Q1 2026 to Q2 2026, and by how many percentage points? (Q2 minus Q1)",
+    "correct": true,
+    "ai_answer": "0.04309999999999997",
+    "truth": "0.04309999999999997",
+    "error": null,
+    "sql": "SELECT (SELECT win_rate FROM main.mart_win_rate_by_close_quarter WHERE quarter='2026-Q2') - (SELECT win_rate FROM main.mart_win_rate_by_close_quarter WHERE quarter='2026-Q1')"
+  },
+  {
+    "id": "h2",
+    "ask": "How many deals are sitting in Contract sent right now that were created before Q4 2026?",
+    "correct": true,
+    "ai_answer": "13",
+    "truth": "13",
+    "error": null,
+    "sql": "SELECT count(*) FROM main.fct_deals WHERE stage_id='contractsent' AND NOT is_closed AND created_quarter < '2026-Q4'"
+  },
+  {
+    "id": "h3",
+    "ask": "Across all deals, what share of deals that reached Qualified to buy went on to Presentation scheduled?",
+    "correct": true,
+    "ai_answer": "0.7027439024390244",
+    "truth": "0.7027439024390244",
+    "error": null,
+    "sql": "SELECT sum(deals_reached_to)*1.0/sum(deals_reached_from) FROM main.mart_stage_conversion WHERE from_stage='Qualified to buy' AND to_stage='Presentation scheduled'"
+  },
+  {
+    "id": "h4",
+    "ask": "What was the average amount of the deals we won in Q3 2026?",
+    "correct": true,
+    "ai_answer": "6174.484285714286",
+    "truth": "6174.484285714286",
+    "error": null,
+    "sql": "SELECT won_amount*1.0/deals_won FROM main.mart_win_rate_by_close_quarter WHERE quarter='2026-Q3'"
+  },
+  {
+    "id": "h5",
+    "ask": "How many deals did Sales rep B win in 2026 so far, across all quarters?",
+    "correct": true,
+    "ai_answer": "13",
+    "truth": "13",
+    "error": null,
+    "sql": "SELECT sum(deals_won) FROM main.mart_owner_win_rate WHERE owner_name='Sales rep B' AND quarter LIKE '2026-%'"
+  },
+  {
+    "id": "h6",
+    "ask": "What was the total amount of the deals we lost in Q3 2026?",
+    "correct": true,
+    "ai_answer": "705512.58",
+    "truth": "705512.58",
+    "error": null,
+    "sql": "SELECT sum(amount) FROM main.fct_deals WHERE is_lost AND closed_quarter='2026-Q3'"
+  },
+  {
+    "id": "h7",
+    "ask": "How much has Q1 2026's win rate changed since we reported it, in percentage points (now minus reported)?",
+    "correct": true,
+    "ai_answer": "-0.0482",
+    "truth": "-0.0482",
+    "error": null,
+    "sql": "SELECT change_since_reported FROM main.mart_win_rate_reported_vs_now WHERE quarter='2026-Q1'"
+  },
+  {
+    "id": "h8",
+    "ask": "What share of the deals created in Q3 2026 are still open?",
+    "correct": true,
+    "ai_answer": "0.1356",
+    "truth": "0.1356",
+    "error": null,
+    "sql": "SELECT share_still_open FROM main.mart_win_rate_by_created_cohort WHERE cohort_quarter='2026-Q3'"
+  },
+  {
+    "id": "h9",
+    "ask": "How many of the deals that closed in Q2 2026 had been pushed back to an earlier stage at least once?",
+    "correct": true,
+    "ai_answer": "9",
+    "truth": "9",
+    "error": null,
+    "sql": "SELECT count(*) FROM main.fct_deals WHERE closed_quarter='2026-Q2' AND was_moved_back"
+  },
+  {
+    "id": "h10",
+    "ask": "What is the median number of days to win, across all deals won in 2026 so far?",
+    "correct": true,
+    "ai_answer": "73.0",
+    "truth": "73.0",
+    "error": null,
+    "sql": "SELECT median(days_to_close) FROM main.fct_deals WHERE is_won AND closed_quarter LIKE '2026-%'"
+  }
+]

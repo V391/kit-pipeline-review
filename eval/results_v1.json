@@ -1,0 +1,92 @@
+[
+  {
+    "id": "q1",
+    "ask": "What was our win rate in Q2 2026?",
+    "correct": true,
+    "ai_answer": "0.2683",
+    "truth": "0.2683",
+    "error": null,
+    "sql": "SELECT win_rate FROM main.mart_win_rate_by_close_quarter WHERE quarter = '2026-Q2'"
+  },
+  {
+    "id": "q2",
+    "ask": "How many deals did we win in Q3 2026?",
+    "correct": true,
+    "ai_answer": "28",
+    "truth": "28",
+    "error": null,
+    "sql": "SELECT COUNT(*) FROM main.fct_deals WHERE is_won AND closed_quarter = '2026-Q3'"
+  },
+  {
+    "id": "q3",
+    "ask": "Of all deals that ever reached Contract sent, what share went on to be won?",
+    "correct": true,
+    "ai_answer": "0.7330316742081447",
+    "truth": "0.7330316742081447",
+    "error": null,
+    "sql": "SELECT AVG(CASE WHEN is_won THEN 1.0 ELSE 0.0 END) FROM main.fct_deals WHERE furthest_open_stage_order >= (SELECT stage_order FROM main.mart_open_pipeline WHERE stage = 'Contract sent')"
+  },
+  {
+    "id": "q4",
+    "ask": "What was the median number of days from creation to win, for deals won in Q1 2026?",
+    "correct": true,
+    "ai_answer": "76.5",
+    "truth": "76.5",
+    "error": null,
+    "sql": "SELECT median_days_to_win FROM main.mart_deal_velocity WHERE quarter = '2026-Q1'"
+  },
+  {
+    "id": "q5",
+    "ask": "How much open pipeline (total amount) is sitting in Contract sent right now?",
+    "correct": true,
+    "ai_answer": "76601.59",
+    "truth": "76601.59",
+    "error": null,
+    "sql": "SELECT open_amount FROM main.mart_open_pipeline WHERE stage = 'Contract sent'"
+  },
+  {
+    "id": "q6",
+    "ask": "What win rate did we report for Q2 2026 at that quarter's pipeline review?",
+    "correct": true,
+    "ai_answer": "0.3158",
+    "truth": "0.3158",
+    "error": null,
+    "sql": "SELECT win_rate_reported FROM main.mart_win_rate_reported_vs_now WHERE quarter = '2026-Q2'"
+  },
+  {
+    "id": "q7",
+    "ask": "Which sales rep had the highest win rate in Q3 2026?",
+    "correct": true,
+    "ai_answer": "Sales rep D",
+    "truth": "Sales rep D",
+    "error": null,
+    "sql": "SELECT owner_name FROM main.mart_owner_win_rate WHERE quarter = '2026-Q3' ORDER BY win_rate DESC LIMIT 1"
+  },
+  {
+    "id": "q8",
+    "ask": "For the deals created in Q1 2026, what share have we won so far?",
+    "correct": true,
+    "ai_answer": "0.23648648648648649",
+    "truth": "0.2365",
+    "error": null,
+    "sql": "SELECT deals_won * 1.0 / deals_created FROM main.mart_win_rate_by_created_cohort WHERE cohort_quarter = '2026-Q1'"
+  },
+  {
+    "id": "q9",
+    "ask": "How many deals were pushed back to an earlier stage at least once?",
+    "correct": true,
+    "ai_answer": "49",
+    "truth": "49",
+    "error": null,
+    "sql": "SELECT COUNT(*) FROM main.fct_deals WHERE was_moved_back"
+  },
+  {
+    "id": "q10",
+    "ask": "What was the total closed-won amount in Q3 2026?",
+    "correct": true,
+    "ai_answer": "172885.56",
+    "truth": "172885.56",
+    "error": null,
+    "sql": "SELECT SUM(amount) FROM main.fct_deals WHERE is_won AND closed_quarter = '2026-Q3'"
+  }
+]
