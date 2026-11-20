@@ -1,0 +1,46 @@
+name: kit_pipeline_review
+version: "1.0.0"
+config-version: 2
+profile: kit_pipeline_review
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+test-paths: ["tests"]
+macro-paths: ["macros"]
+target-path: "target"
+clean-targets: ["target", "dbt_packages"]
+
+vars:
+  # The pipeline review that reports a quarter happens this many days after it ends.
+  reported_after_days: 7
+
+seeds:
+  kit_pipeline_review:
+    +schema: raw
+    hubspot_deals:
+      +column_types:
+        hs_object_id: varchar
+        hubspot_owner_id: varchar
+        amount: decimal(12,2)
+        createdate: timestamp
+        closedate: timestamp
+    hubspot_deal_property_history:
+      +column_types:
+        deal_id: varchar
+        value: varchar
+        timestamp: timestamp
+    hubspot_owners:
+      +column_types:
+        owner_id: varchar
+    export_meta:
+      +column_types:
+        exported_at: timestamp
+
+models:
+  kit_pipeline_review:
+    staging:
+      +materialized: view
+    intermediate:
+      +materialized: view
+    marts:
+      +materialized: table

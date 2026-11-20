@@ -1,0 +1,7 @@
+kit_pipeline_review:
+  target: local
+  outputs:
+    local:
+      type: duckdb
+      path: target/kit_pipeline_review.duckdb
+      threads: 4
