@@ -1,0 +1,43 @@
+version: 2
+
+models:
+  - name: fct_deals
+    description: One row per deal, as the CRM holds it today.
+    columns:
+      - name: deal_id
+        tests: [unique, not_null]
+      - name: owner_id
+        tests:
+          - not_null
+          - relationships: {to: ref('stg_hubspot__owners'), field: owner_id}
+      - name: stage_id
+        tests:
+          - accepted_values:
+              values: [appointmentscheduled, qualifiedtobuy, presentationscheduled, decisionmakerboughtin, contractsent, closedwon, closedlost]
+      - name: amount
+        tests: [not_null]
+
+  - name: mart_win_rate_by_close_quarter
+    columns:
+      - name: quarter
+        tests: [unique, not_null]
+
+  - name: mart_win_rate_by_created_cohort
+    columns:
+      - name: cohort_quarter
+        tests: [unique, not_null]
+
+  - name: mart_win_rate_reported_vs_now
+    columns:
+      - name: quarter
+        tests: [unique, not_null]
+
+  - name: mart_deal_velocity
+    columns:
+      - name: quarter
+        tests: [unique, not_null]
+
+  - name: mart_open_pipeline
+    columns:
+      - name: stage
+        tests: [unique, not_null]
