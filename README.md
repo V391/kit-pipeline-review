@@ -9,7 +9,7 @@ posting asks for, built on **sample data in HubSpot's deal shape** (900 syntheti
 ## Architecture
 
 ```mermaid
-flowchart LR
+flowchart TD
     A["Sample HubSpot export<br/>deals, stage and close date history, owners"] --> B["Staging models"]
     B --> C["History rebuild<br/>what each pipeline review knew"]
     B --> D["fct_deals<br/>one row per deal"]
